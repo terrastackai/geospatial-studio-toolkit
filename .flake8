@@ -1,0 +1,18 @@
+# © Copyright IBM Corporation 2025
+# SPDX-License-Identifier: Apache-2.0
+
+
+[flake8]
+ignore = E501
+extend-ignore = E203, W503, E231, E713, E226, E712, F841, F401
+max-line-length = 120
+max-complexity = 20
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    venv,
+    help/*
+per-file-ignores =
+    geospatial-studio-qgis/geo_inference/resources.qrc: ALL
