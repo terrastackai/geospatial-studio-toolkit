@@ -5,7 +5,7 @@
 import enum
 import re
 import uuid
-from typing import Any, Dict, List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 
@@ -76,6 +76,13 @@ class HpoTuneSubmitIn(BaseModel):
     tune_metadata: TuneSubmitBase
     config_file: str
 
+class PostProcessing(BaseModel):
+    cloud_masking: Optional[Union[bool, str, dict]] = None
+    snow_ice_masking: Optional[Union[bool, str, dict]] = None
+    permanent_water_masking: Optional[Union[bool, str, dict]] = None
+    ocean_masking: Optional[Union[bool, str, dict]] = None
+    regularization_custom: Optional[List[Dict[str, Any]]] = None
+    model_config = {"extra": "allow"}
 
 class TryOutTuneInput(BaseModel):
     model_display_name: str = ""
@@ -87,6 +94,7 @@ class TryOutTuneInput(BaseModel):
     model_input_data_spec: Optional[List[Dict[str, Any]]] = None
     data_connector_config: Optional[List[DataSource]] = None
     geoserver_push: Optional[List[GeoServerPush]] = None
+    post_processing: Optional[PostProcessing] = None
 
     class Config:
         protected_namespaces = ()
