@@ -536,7 +536,6 @@ def fileDownloaderTasks(client, task_id,just_tifs=True):
     """
 
     r = client.get_task_output_url(task_id)
-    print(f"Just tiffs: {just_tifs}")
     fl = list_output_files(url = r["output_url"], just_tif=just_tifs)
 
     sm = widgets.SelectMultiple(
