@@ -76,6 +76,7 @@ class HpoTuneSubmitIn(BaseModel):
     tune_metadata: TuneSubmitBase
     config_file: str
 
+
 class PostProcessing(BaseModel):
     cloud_masking: Optional[Union[bool, str, dict]] = None
     snow_ice_masking: Optional[Union[bool, str, dict]] = None
@@ -83,6 +84,7 @@ class PostProcessing(BaseModel):
     ocean_masking: Optional[Union[bool, str, dict]] = None
     regularization_custom: Optional[List[Dict[str, Any]]] = None
     model_config = {"extra": "allow"}
+
 
 class TryOutTuneInput(BaseModel):
     model_display_name: str = ""
