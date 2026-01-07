@@ -469,7 +469,7 @@ def available_models_ui(client):
 #     sleep(poll_frequency)
 
 
-def fileDownloader(client, id):
+def fileDownloader(client, id, just_tifs=True):
     """
     Downloads the output files of an inference task.
 
@@ -482,7 +482,7 @@ def fileDownloader(client, id):
     """
 
     r = client.get_inference_task(id)
-    fl = list_output_files(r["output_url"])
+    fl = list_output_files(url=r["output_url"], just_tif=just_tifs)
 
     sm = widgets.SelectMultiple(
         options=fl,
@@ -523,7 +523,7 @@ def fileDownloader(client, id):
     db.on_click(on_button_clicked)
 
 
-def fileDownloaderTasks(client, task_id):
+def fileDownloaderTasks(client, task_id, just_tifs=True):
     """
     Downloads the output files of an inference task.
 
@@ -536,7 +536,7 @@ def fileDownloaderTasks(client, task_id):
     """
 
     r = client.get_task_output_url(task_id)
-    fl = list_output_files(r["output_url"])
+    fl = list_output_files(url=r["output_url"], just_tif=just_tifs)
 
     sm = widgets.SelectMultiple(
         options=fl,
@@ -725,7 +725,7 @@ def inferenceViewer(client, id):
             sm,
             db,
             map,
-            output
+            output,
             # footer
         ]
     )
@@ -824,7 +824,7 @@ def inferenceTaskViewer(client, task_id):
             sm,
             db,
             map,
-            output
+            output,
             # footer
         ]
     )
