@@ -175,3 +175,6 @@ resources.qrc
 *.geostudio_apikey*
 tasks/
 *.geostudio_config_file*
+
+# tune-tasks folder
+**/tune-tasks/
