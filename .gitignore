@@ -176,3 +176,4 @@ resources.qrc
 *.geostudio_apikey*
 tasks/
 *.geostudio_config_file*
+geospatial-studio-sdk/docs/examples/
