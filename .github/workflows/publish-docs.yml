@@ -33,10 +33,6 @@ jobs:
       - name: Install poetry
         run: pip install poetry
 
-      - name: Create poetry environment
-        working-directory: ./geospatial-studio-sdk
-        run: poetry init
-
       - name: Install dependencies
         working-directory: ./geospatial-studio-sdk
         run: poetry install
