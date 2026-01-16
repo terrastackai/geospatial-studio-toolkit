@@ -3,7 +3,7 @@ name: Build and Publish Docs
 on:
   push:
     branches:
-      - main
+      - '**'
     paths:
       - 'geospatial-studio-sdk/docs/**'
       - '.github/workflows/publish-docs.yml'
@@ -37,6 +37,10 @@ jobs:
         working-directory: ./geospatial-studio-sdk
         run: poetry init
 
+      - name: Install dependencies
+        working-directory: ./geospatial-studio-sdk
+        run: poetry install
+
       - name: Build documentation
         working-directory: ./geospatial-studio-sdk
         run: poetry run docs-build
@@ -47,4 +51,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./geospatial-studio-sdk/sdk-docs-site
+          publish_branch: gh-pages
           cname: terrastackai.github.io
