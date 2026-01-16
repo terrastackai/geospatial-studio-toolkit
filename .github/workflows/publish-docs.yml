@@ -12,6 +12,7 @@ on:
       - main
     paths:
       - 'geospatial-studio-sdk/docs/**'
+      - '.github/workflows/publish-docs.yml'
     types: [opened, synchronize, reopened]
 
 jobs:
