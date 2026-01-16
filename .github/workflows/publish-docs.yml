@@ -3,7 +3,7 @@ name: Build and Publish Docs
 on:
   push:
     branches:
-      - '**'
+      - main
     paths:
       - 'geospatial-studio-sdk/docs/**'
       - '.github/workflows/publish-docs.yml'
