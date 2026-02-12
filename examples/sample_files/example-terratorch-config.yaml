@@ -10,15 +10,7 @@ trainer:
   devices: auto
   num_nodes: 1
   precision: 16-mixed
-  logger:
-    class_path: lightning.pytorch.loggers.mlflow.MLFlowLogger
-    init_args:
-      experiment_name: geotune-5vmhksvpy4tg6bm957fw8k # Future version, chnage this to user / email
-      run_name: "Test tune 1"    # Future version, chnage this to tune_id
-      save_dir: /geotunes/tune-tasks/geotune-5vmhksvpy4tg6bm957fw8k/mlflow
-      tags:
-        email: Catherine.Wanjiru@ibm.com
-        name: Catherine.Wanjiru
+  logger: true
 
   callbacks:
     - class_path: RichProgressBar
