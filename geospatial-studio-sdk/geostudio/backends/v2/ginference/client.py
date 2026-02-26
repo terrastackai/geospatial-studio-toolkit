@@ -396,7 +396,7 @@ class Client(BaseClient):
                 m = MultipartEncoderMonitor(e, monitor_callback)
 
                 headers = {"Content-Type": m.content_type}
-                response = requests.put(upload_url, data=m, headers=headers)
+                response = requests.put(upload_url, data=m, headers=headers, verify=False)
         return response
 
     def upload_file(self, filename: str):
