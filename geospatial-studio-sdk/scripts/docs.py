@@ -17,7 +17,7 @@ def _copy_examples():
     dest_dir = "./docs/examples"
     if not os.path.exists(dest_dir):
         subprocess.run(["mkdir", "-p", dest_dir], text=True, check=True)
-    subprocess.run(f"cp -r {examples_dir}/* {dest_dir}/", text=True, check=True, shell=True)
+    subprocess.run(f"rsync -a --exclude='tune-tasks' {examples_dir}/ {dest_dir}/", text=True, check=True, shell=True)
 
 
 def _fetch_openapi_json(endpoint: str):

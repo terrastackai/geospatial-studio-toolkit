@@ -109,6 +109,8 @@ class UploadTuneInput(BaseModel):
     tune_checkpoint_url: str
     model_input_data_spec: Optional[List[Dict[str, Any]]] = None
     data_connector_config: Optional[List[DataSource]] = None
+    geoserver_push: Optional[List[GeoServerPush]] = None
+    post_processing: Optional[PostProcessing] = None
 
     class Config:
         protected_namespaces = ()

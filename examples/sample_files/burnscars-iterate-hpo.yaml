@@ -12,13 +12,7 @@ defaults:
   trainer_args:
     accelerator: gpu
     log_every_n_steps: 1
-    logger:
-      class_path: lightning.pytorch.loggers.mlflow.MLFlowLogger
-      init_args:
-        experiment_name: prithvi-eo2
-        run_name: prithvi-eo2-burnscars
-        save_dir: /working/mlflow
-        tracking_uri: https://gfm-mlflow-internal-nasageospatial-dev.cash.sl.cloud9.ibm.com
+    logger: true
     max_epochs: 4
 experiment_name: test_geotune-burnscars-config
 n_trials: 4
