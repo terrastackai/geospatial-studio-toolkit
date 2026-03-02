@@ -3,6 +3,8 @@
 
 
 import json
+import mimetypes
+import os
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,7 +15,6 @@ import boto3
 import pandas as pd
 import requests
 from botocore.exceptions import ClientError
-from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 from rich.progress import (
     BarColumn,
     DownloadColumn,
@@ -32,6 +33,24 @@ from .models import (
     ModelOnboardingInputSchema,
     ModelUpdateInput,
 )
+
+
+class RichProgressWrapper:
+    def __init__(self, stream, progress, task_id):
+        self.stream = stream
+        self.progress = progress
+        self.task_id = task_id
+        # Get the total size for the Content-Length header
+        self.total_size = os.fstat(self.stream.fileno()).st_size
+
+    def read(self, size=-1):
+        chunk = self.stream.read(size)
+        if chunk:
+            self.progress.update(self.task_id, advance=len(chunk))
+        return chunk
+
+    def __len__(self):
+        return self.total_size
 
 
 class Client(BaseClient):
@@ -357,7 +376,7 @@ class Client(BaseClient):
 
     def upload_file_to_url(self, upload_url: str, filepath: str):
         """
-        Uploads a file to a specified URL using a PUT request.
+        Uploads a file to a specified URL using a PUT request with a rich progress bar.
 
         Args:
             upload_url (str): The URL to which the file will be uploaded.
@@ -369,10 +388,11 @@ class Client(BaseClient):
 
         print("Going to upload the file to the url.")
 
-        fields = {}
         path = Path(filepath)
         total_size = path.stat().st_size
         filename = path.name
+        content_type, _ = mimetypes.guess_type(filename)
+        headers = {"Content-Type": content_type or "application/octet-stream", "Content-Length": str(total_size)}
 
         with Progress(
             TextColumn("[bold black]{task.description}"),
@@ -380,24 +400,13 @@ class Client(BaseClient):
             DownloadColumn(),
             TransferSpeedColumn(),
             TimeRemainingColumn(),
-        ) as progress_bar:
-            task = progress_bar.add_task(filename, total=total_size)
+        ) as progress:
+            task_id = progress.add_task(description=filename, total=total_size)
+
             with open(filepath, "rb") as f:
-                fields["file"] = ("filename", f)
-                e = MultipartEncoder(fields=fields)
-                last_bytes = 0
-
-                def monitor_callback(monitor):
-                    nonlocal last_bytes
-                    bytes_diff = monitor.bytes_read - last_bytes
-                    progress_bar.update(task, advance=bytes_diff)
-                    last_bytes = monitor.bytes_read
-
-                m = MultipartEncoderMonitor(e, monitor_callback)
-
-                headers = {"Content-Type": m.content_type}
-                response = requests.put(upload_url, data=m, headers=headers, verify=False)
-        return response
+                wrapped_file = RichProgressWrapper(f, progress, task_id)
+                response = requests.put(upload_url, data=wrapped_file, headers=headers, verify=False)
+                return response
 
     def upload_file(self, filename: str):
         """
@@ -408,126 +417,12 @@ class Client(BaseClient):
         # print(links)
         upload_url = links.get("upload_url", None)
         if upload_url:
-            self.upload_file_to_url(links["upload_url"], filename)
+            response = self.upload_file_to_url(links["upload_url"], filename)
+            if response.status_code == 200:
+                print(f"\n[bold green]✓ Verified:[/bold green] {filename} uploaded.")
+            else:
+                print(f"\n[bold red]✗ Failed:[/bold red] Status {response.status_code}")
         return links
-
-    def create_download_presigned_url(
-        self,
-        bucket_name: str,
-        object_key: str,
-        endpoint_url: str,
-        region_name: str,
-        service_name: str,
-        aws_access_key_id: str = None,
-        aws_secret_access_key: str = None,
-        expiration: int = 3600,
-        **kwargs,
-    ):
-        """Function to create presigned url to download object from bucket
-
-        Parameters
-        ----------
-        bucket_name : str
-            The bucket name in the instance
-        object_key : str
-            Object path to pre-sign
-        endpoint_url: str
-            s3 Endpoint i.e https://s3.us-east.cloud-object-storage.appdomain.cloud
-        region_name: str
-            Region where bucket lives. i.e us-east
-        service_name: str
-            service to connect to i.e s3
-        aws_access_key_id: str
-            AWS Access key to the instance
-        aws_secret_access_key: str
-            AWS secret access key to the instance
-        expiration : int, optional
-            Expiration duration in seconds, by default 3600
-
-        Returns
-        -------
-        str
-            Presigned download url
-        """
-
-        s3_client = boto3.client(
-            service_name,
-            region_name=region_name,
-            endpoint_url=endpoint_url,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_access_key_id=aws_access_key_id,
-            **kwargs,
-        )
-        try:
-            download_url = s3_client.generate_presigned_url(
-                ClientMethod="get_object",
-                Params={"Bucket": bucket_name, "Key": object_key},
-                ExpiresIn=expiration,
-            )
-        except ClientError as e:
-            print(f"Error creating presigned URL: {e}")
-            return None
-
-        return download_url
-
-    def create_upload_presigned_url(
-        self,
-        bucket_name: str,
-        object_key: str,
-        endpoint_url: str,
-        region_name: str,
-        service_name: str,
-        aws_access_key_id: str = None,
-        aws_secret_access_key: str = None,
-        expiration: int = 3600,
-        **kwargs,
-    ):
-        """Function to create presigned url to upload object from bucket
-
-        Parameters
-        ----------
-        bucket_name : str
-            The bucket name in the instance
-        object_key : str
-            Object path to pre-sign
-        endpoint_url: str
-            s3 Endpoint i.e https://s3.us-east.cloud-object-storage.appdomain.cloud
-        region_name: str
-            Region where bucket lives. i.e us-east
-        service_name: str
-            service to connect to i.e s3
-        aws_access_key_id: str
-            AWS Access key to the instance
-        aws_secret_access_key: str
-            AWS secret access key to the instance
-        expiration : int, optional
-            Expiration duration in seconds, by default 3600
-
-        Returns
-        -------
-        str
-            Presigned upload url
-        """
-
-        s3_client = boto3.client(
-            service_name,
-            region_name=region_name,
-            endpoint_url=endpoint_url,
-            aws_secret_access_key=aws_secret_access_key,
-            aws_access_key_id=aws_access_key_id,
-            **kwargs,
-        )
-        try:
-            upload_url = s3_client.generate_presigned_url(
-                ClientMethod="put_object",
-                Params={"Bucket": bucket_name, "Key": object_key},
-                ExpiresIn=expiration,
-            )
-        except ClientError as e:
-            print(f"Error creating presigned URL: {e}")
-            return None
-
-        return upload_url
 
     ##############################################
     #   Polling
