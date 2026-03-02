@@ -11,10 +11,8 @@ from pathlib import Path
 from time import sleep
 from uuid import UUID
 
-import boto3
 import pandas as pd
 import requests
-from botocore.exceptions import ClientError
 from rich.progress import (
     BarColumn,
     DownloadColumn,
