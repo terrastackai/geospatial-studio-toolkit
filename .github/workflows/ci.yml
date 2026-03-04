@@ -1,0 +1,78 @@
+name: SDK – Lint, Format, Test, Build
+
+on:
+  # Run on every PR that targets main
+  pull_request:
+    branches: [main]
+    paths:
+      - 'geospatial-studio-sdk/**'
+      - '.pre-commit-config.yaml'
+      - '.flake8'
+      - '.github/workflows/ci.yml'
+  # Also run when commits are pushed/merged directly to main
+  push:
+    branches: [main]
+    paths:
+      - 'geospatial-studio-sdk/**'
+      - '.pre-commit-config.yaml'
+      - '.flake8'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  ci:
+    name: Lint · Format · Secrets · Test · Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./geospatial-studio-sdk
+
+    steps:
+      # ── Checkout ────────────────────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history needed by detect-secrets baseline diff
+
+      # ── Python + Poetry ─────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-${{ runner.os }}-${{ hashFiles('geospatial-studio-sdk/poetry.lock') }}
+          restore-keys: poetry-${{ runner.os }}-
+
+      - name: Install all dependency groups
+        run: poetry install --with dev,test
+
+      # ── pre-commit: all hooks (check-yaml, end-of-file-fixer, ────────────────
+      # trailing-whitespace, check-merge-conflict, check-case-conflict,  ────────
+      # check-added-large-files, black, isort, flake8, detect-secrets) ──────────
+      - name: Install pre-commit
+        run: pip install pre-commit
+        working-directory: .
+
+      - name: Run all pre-commit hooks
+        run: pre-commit run --all-files
+        working-directory: .
+
+      # ── Tests ────────────────────────────────────────────────────────────────
+      - name: pytest
+        run: poetry run pytest --tb=short -q
+
+      # ── Build (dry-run publish check) ────────────────────────────────────────
+      - name: Build package
+        run: poetry build
+
+      - name: Verify dist artefacts with twine
+        run: |
+          pip install twine
+          twine check dist/*
