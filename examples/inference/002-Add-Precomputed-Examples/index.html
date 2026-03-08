@@ -12,7 +12,7 @@
         <link rel="prev" href="../001-Introduction-to-Inferencing/">
       
       
-        <link rel="next" href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-BurnScars/">
+        <link rel="next" href="../003-Running-inferences-with-extra-pipeline-steps/">
       
       
         
@@ -1204,6 +1204,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../003-Running-inferences-with-extra-pipeline-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    003-Running-inferences-with-extra-pipeline-steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-BurnScars/" class="md-nav__link">
         
   
@@ -1240,6 +1268,34 @@
     
   
     Mapping flooding using an AI flood model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-Flooding_Terramind_Tiny/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terramind Tiny in Action
   
 
     
@@ -1961,7 +2017,10 @@ gfm_client.get_fileshare_links(object_name)</div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>use the <code>upload_url</code> to upload each file you want to add.</p>
-<div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span>-T<span class="w"> </span>**your_file.zip<span class="w"> </span>or<span class="w"> </span>your_file.gpkg<span class="w"> </span>or<span class="w"> </span>your_file.nc**<span class="w"> </span><span class="s2">"**upload_url**"</span>
+<div class="highlight"><pre><span></span><span class="c1"># the file can be a .zip, .gpkg, .nc</span>
+<span class="nv">yourfile</span><span class="o">=</span><span class="s2">"path_to_me_file/file.tif"</span>
+<span class="nv">upload_url</span><span class="o">=</span><span class="s2">"https://my.url.me"</span>
+curl<span class="w"> </span>-kX<span class="w"> </span>PUT<span class="w"> </span>-T<span class="w"> </span><span class="s2">"</span><span class="nv">$yourfile</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$upload_url</span><span class="s2">"</span>
 </pre></div>
 <p>use the equivalent <code>download_url</code> for the section below.</p>
 </div>
@@ -2581,13 +2640,13 @@ display(df.style.map(gswidgets.color_inference_tasks_by_status))</div>
         
         
           
-          <a href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-BurnScars/" class="md-footer__link md-footer__link--next" aria-label="Next: Mapping wildfire burn scars using HLS data">
+          <a href="../003-Running-inferences-with-extra-pipeline-steps/" class="md-footer__link md-footer__link--next" aria-label="Next: 003-Running-inferences-with-extra-pipeline-steps">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Mapping wildfire burn scars using HLS data
+                003-Running-inferences-with-extra-pipeline-steps
               </div>
             </div>
             <div class="md-footer__button md-icon">

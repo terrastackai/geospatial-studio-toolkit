@@ -1082,6 +1082,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../inference/003-Running-inferences-with-extra-pipeline-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    003-Running-inferences-with-extra-pipeline-steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-BurnScars/" class="md-nav__link">
         
   
@@ -1118,6 +1146,34 @@
     
   
     Mapping flooding using an AI flood model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../e2e-walkthroughs/GeospatialStudio-Walkthrough-Flooding_Terramind_Tiny/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terramind Tiny in Action
   
 
     
@@ -2483,140 +2539,53 @@ mdf.head()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="personal-buckets">Personal buckets<a class="anchor-link" href="#personal-buckets">¶</a></h4><p>Use the <code>create_upload_presigned_url</code> to generate an upload link that you can use to upload the file to the dataset.</p>
+<h4 id="personal-buckets">Personal buckets<a class="anchor-link" href="#personal-buckets">¶</a></h4><p>Use this custom instruction to generate an upload link that you can use to upload the file to the dataset.</p>
 <p>This function assumes you have your own storage bucket to upload to.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c4d57d61">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-21">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">upload_url</span> <span class="o">=</span> <span class="n">gfm_client</span><span class="o">.</span><span class="n">create_upload_presigned_url</span><span class="p">(</span>
-    <span class="n">bucket_name</span><span class="o">=</span><span class="s2">"bucket_name"</span><span class="p">,</span> <span class="c1"># bucket name</span>
-    <span class="n">object_key</span><span class="o">=</span><span class="s2">"data/train/austin1_sdk_upload.tiff"</span><span class="p">,</span> <span class="c1"># file path to upload in the bucket</span>
-    <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.us-east.cloud-object-storage.appdomain.cloud"</span><span class="p">,</span> <span class="c1"># s3 endpoint url</span>
-    <span class="n">service_name</span><span class="o">=</span> <span class="s2">"s3"</span><span class="p">,</span> <span class="c1"># service to use</span>
-    <span class="n">region_name</span><span class="o">=</span><span class="s2">"us-east"</span><span class="p">,</span> <span class="c1"># cloud region </span>
-    <span class="n">expiration</span><span class="o">=</span><span class="mi">3600</span> <span class="c1"># expiration</span>
-    <span class="c1"># Add any other args to pass to the s3 client</span>
-<span class="p">)</span>
-<span class="n">upload_url</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-21">upload_url = gfm_client.create_upload_presigned_url(
-    bucket_name="bucket_name", # bucket name
-    object_key="data/train/austin1_sdk_upload.tiff", # file path to upload in the bucket
-    endpoint_url="https://s3.us-east.cloud-object-storage.appdomain.cloud", # s3 endpoint url
-    service_name= "s3", # service to use
-    region_name="us-east", # cloud region 
-    expiration=3600 # expiration
-    # Add any other args to pass to the s3 client
-)
-upload_url</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=13c7b596">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-22">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Push your file to the bucket using the url generated.</span>
-<span class="err">!</span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">T</span> <span class="o">**</span><span class="n">your_file</span><span class="o">.</span><span class="n">zip</span> <span class="ow">or</span> <span class="n">your_file</span><span class="o">.</span><span class="n">tiff</span> <span class="ow">or</span> <span class="n">your_file</span><span class="o">.</span><span class="n">tif</span><span class="o">**</span> <span class="s2">"**upload_url**"</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-22"># Push your file to the bucket using the url generated.
-!curl -X PUT -T **your_file.zip or your_file.tiff or your_file.tif** "**upload_url**"</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bbd80385">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Once the image is uploaded to your s3 bucket, create a download link to use in the inference request.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fb2f43bb">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-23">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">download_url</span> <span class="o">=</span> <span class="n">gfm_client</span><span class="o">.</span><span class="n">create_download_presigned_url</span><span class="p">(</span>
-    <span class="n">bucket_name</span><span class="o">=</span><span class="s2">"geospatial-studio-example-data"</span><span class="p">,</span> <span class="c1"># bucket name</span>
-    <span class="n">object_key</span><span class="o">=</span><span class="s2">"data/train/austin1_sdk_upload.tiff"</span><span class="p">,</span> <span class="c1"># file path to upload in the bucket</span>
-    <span class="n">endpoint_url</span><span class="o">=</span><span class="s2">"https://s3.us-east.cloud-object-storage.appdomain.cloud"</span><span class="p">,</span> <span class="c1"># s3 endpoint url</span>
-    <span class="n">service_name</span><span class="o">=</span> <span class="s2">"s3"</span><span class="p">,</span> <span class="c1"># service to use</span>
-    <span class="n">region_name</span><span class="o">=</span><span class="s2">"us-east"</span><span class="p">,</span> <span class="c1"># cloud region </span>
-    <span class="n">expiration</span><span class="o">=</span><span class="mi">7200</span> <span class="c1"># expiration</span>
-    <span class="c1"># Add any other args to pass to the s3 client</span>
+<h5 id="use-ibm_boto3-to-create-your-upload-url">use ibm_boto3 to create your upload url;<a class="anchor-link" href="#use-ibm_boto3-to-create-your-upload-url">¶</a></h5><h5 id="this-is-a-simple-implementation-configure-this-to-your-preference">this is a simple implementation; configure this to your preference<a class="anchor-link" href="#this-is-a-simple-implementation-configure-this-to-your-preference">¶</a></h5><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ibm_boto3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ibm_botocore.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 
+<span class="n">cos</span> <span class="o">=</span> <span class="n">ibm_boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span>
+    <span class="s2">"s3"</span><span class="p">,</span>
+    <span class="n">aws_access_key_id</span><span class="o">=</span><span class="s1">'minioadmin'</span><span class="p">,</span> <span class="c1"># prod</span>
+    <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="s1">'minioadmin'</span><span class="p">,</span> <span class="c1"># prod</span>
+    <span class="n">endpoint_url</span><span class="o">=</span><span class="s1">'https://minio.default.svc.cluster.local:9000'</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="s2">"s3v4"</span><span class="p">),</span>
 <span class="p">)</span>
-<span class="n">download_url</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-23">download_url = gfm_client.create_download_presigned_url(
-    bucket_name="geospatial-studio-example-data", # bucket name
-    object_key="data/train/austin1_sdk_upload.tiff", # file path to upload in the bucket
-    endpoint_url="https://s3.us-east.cloud-object-storage.appdomain.cloud", # s3 endpoint url
-    service_name= "s3", # service to use
-    region_name="us-east", # cloud region 
-    expiration=7200 # expiration
-    # Add any other args to pass to the s3 client
 
-)
-download_url</div>
-</div>
-</div>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="n">http_method</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="n">object_key_name</span><span class="p">,</span> <span class="n">expiration</span><span class="p">):</span>
+    <span class="n">signedUrl</span> <span class="o">=</span> <span class="n">cos</span><span class="o">.</span><span class="n">generate_presigned_url</span><span class="p">(</span>
+        <span class="n">http_method</span><span class="p">,</span>
+        <span class="n">Params</span><span class="o">=</span><span class="p">{</span><span class="s2">"Bucket"</span><span class="p">:</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="s2">"Key"</span><span class="p">:</span> <span class="n">object_key_name</span><span class="p">},</span>
+        <span class="n">ExpiresIn</span><span class="o">=</span><span class="n">expiration</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">signedUrl</span>
+
+<span class="n">upload_url</span> <span class="o">=</span> <span class="n">generate_presigned_url</span><span class="p">(</span><span class="s1">'put_object'</span><span class="p">,</span> <span class="s1">'lima-temp'</span><span class="p">,</span> <span class="s1">'path_to_me_file/file.tif'</span><span class="p">,</span> <span class="mi">7200</span><span class="p">)</span>
+</pre></div>
+<h5 id="push-your-file-to-the-bucket-using-the-url-generated">Push your file to the bucket using the url generated.<a class="anchor-link" href="#push-your-file-to-the-bucket-using-the-url-generated">¶</a></h5><div class="highlight"><pre><span></span><span class="n">yourfile</span><span class="o">=</span><span class="s2">"path_to_me_file/file.tif"</span>
+<span class="err">!</span><span class="n">curl</span> <span class="o">-</span><span class="n">kX</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">T</span> <span class="s2">"$yourfile"</span> <span class="s2">"$upload_url"</span>
+</pre></div>
+<h5 id="once-the-image-is-uploaded-to-your-s3-bucket-create-a-download-link-to-use-in-the-inference-request">Once the image is uploaded to your s3 bucket, create a download link to use in the inference request.<a class="anchor-link" href="#once-the-image-is-uploaded-to-your-s3-bucket-create-a-download-link-to-use-in-the-inference-request">¶</a></h5><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ibm_boto3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ibm_botocore.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+
+<span class="n">cos</span> <span class="o">=</span> <span class="n">ibm_boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span>
+    <span class="s2">"s3"</span><span class="p">,</span>
+    <span class="n">aws_access_key_id</span><span class="o">=</span><span class="s1">'accesskey'</span><span class="p">,</span> <span class="c1"># prod</span>
+    <span class="n">aws_secret_access_key</span><span class="o">=</span><span class="s1">'secretkey'</span><span class="p">,</span> <span class="c1"># prod</span>
+    <span class="n">endpoint_url</span><span class="o">=</span><span class="s1">'https://minio.default.svc.cluster.local:9000'</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">Config</span><span class="p">(</span><span class="n">signature_version</span><span class="o">=</span><span class="s2">"s3v4"</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_presigned_url</span><span class="p">(</span><span class="n">http_method</span><span class="p">,</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="n">object_key_name</span><span class="p">,</span> <span class="n">expiration</span><span class="p">):</span>
+    <span class="n">signedUrl</span> <span class="o">=</span> <span class="n">cos</span><span class="o">.</span><span class="n">generate_presigned_url</span><span class="p">(</span>
+        <span class="n">http_method</span><span class="p">,</span>
+        <span class="n">Params</span><span class="o">=</span><span class="p">{</span><span class="s2">"Bucket"</span><span class="p">:</span> <span class="n">bucket_name</span><span class="p">,</span> <span class="s2">"Key"</span><span class="p">:</span> <span class="n">object_key_name</span><span class="p">},</span>
+        <span class="n">ExpiresIn</span><span class="o">=</span><span class="n">expiration</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">signedUrl</span>
+
+<span class="n">download_url</span> <span class="o">=</span> <span class="n">generate_presigned_url</span><span class="p">(</span><span class="s1">'get_object'</span><span class="p">,</span> <span class="s1">'lima-temp'</span><span class="p">,</span> <span class="s1">'path_to_me_file/file.tif'</span><span class="p">,</span> <span class="mi">7200</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -2651,7 +2620,7 @@ download_url</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-24">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-21">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2663,12 +2632,16 @@ download_url</div>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Unique object name to be used in temporary COS for each layer you want to upload</span>
 <span class="n">object_name</span> <span class="o">=</span> <span class="s2">"austin1_sdk_upload.tiff"</span>
-<span class="n">gfm_client</span><span class="o">.</span><span class="n">get_fileshare_links</span><span class="p">(</span><span class="n">object_name</span><span class="p">)</span>
+<span class="n">links</span><span class="o">=</span><span class="n">gfm_client</span><span class="o">.</span><span class="n">get_fileshare_links</span><span class="p">(</span><span class="n">object_name</span><span class="p">)</span>
+<span class="n">object_download_url</span><span class="o">=</span><span class="n">links</span><span class="p">[</span><span class="s2">"download_url"</span><span class="p">]</span>
+<span class="n">object_upload_url</span><span class="o">=</span><span class="n">links</span><span class="p">[</span><span class="s2">"upload_url"</span><span class="p">]</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-24">
+<div class="clipboard-copy-txt" id="cell-21">
 # Unique object name to be used in temporary COS for each layer you want to upload
 object_name = "austin1_sdk_upload.tiff"
-gfm_client.get_fileshare_links(object_name)
+links=gfm_client.get_fileshare_links(object_name)
+object_download_url=links["download_url"]
+object_upload_url=links["upload_url"]
 </div>
 </div>
 </div>
@@ -2684,7 +2657,7 @@ gfm_client.get_fileshare_links(object_name)
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-25">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-22">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2695,10 +2668,12 @@ gfm_client.get_fileshare_links(object_name)
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Push your file to the bucket using the url generated.</span>
-<span class="err">!</span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">T</span> <span class="o">**</span><span class="n">your_file</span><span class="o">.</span><span class="n">zip</span> <span class="ow">or</span> <span class="n">your_file</span><span class="o">.</span><span class="n">tiff</span> <span class="ow">or</span> <span class="n">your_file</span><span class="o">.</span><span class="n">tif</span><span class="o">**</span> <span class="s2">"**upload_url**"</span>
+<span class="n">yourfile</span><span class="o">=</span><span class="s2">"path_to_me_file/file.tif"</span>
+<span class="err">!</span><span class="n">curl</span> <span class="o">-</span><span class="n">kX</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">T</span> <span class="s2">"$yourfile"</span> <span class="s2">"$object_upload_url"</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-25"># Push your file to the bucket using the url generated.
-!curl -X PUT -T **your_file.zip or your_file.tiff or your_file.tif** "**upload_url**"</div>
+<div class="clipboard-copy-txt" id="cell-22"># Push your file to the bucket using the url generated.
+yourfile="path_to_me_file/file.tif"
+!curl -kX PUT -T "$yourfile" "$object_upload_url"</div>
 </div>
 </div>
 </div>
@@ -2724,7 +2699,7 @@ gfm_client.get_fileshare_links(object_name)
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-26">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-23">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2737,7 +2712,7 @@ gfm_client.get_fileshare_links(object_name)
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># define the inference payload</span>
 
 <span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">121.837006</span><span class="p">,</span><span class="mf">39.826468</span><span class="p">,</span><span class="o">-</span><span class="mf">121.641312</span><span class="p">,</span><span class="mf">40.038655</span><span class="p">]</span>
-<span class="n">download_url_tiff</span> <span class="o">=</span> <span class="n">download_url</span>
+<span class="n">download_url_tiff</span> <span class="o">=</span> <span class="n">object_download_url</span>
 
 <span class="c1"># When using a bbox</span>
 <span class="n">request_payload_with_bbox</span> <span class="o">=</span> <span class="p">{</span>
@@ -2765,14 +2740,14 @@ gfm_client.get_fileshare_links(object_name)
 			<span class="s2">"urls"</span><span class="p">:</span> <span class="p">[</span><span class="n">download_url_tiff</span><span class="p">]</span> <span class="c1"># When using url</span>
 	<span class="p">},</span>
 	<span class="s2">"temporal_domain"</span><span class="p">:</span> <span class="p">[</span>
-			<span class="s2">"2024-08-12_2024-08-13"</span>
+			<span class="s2">"2024-08-12"</span>
 	<span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-26"># define the inference payload
+<div class="clipboard-copy-txt" id="cell-23"># define the inference payload
 
 bbox = [-121.837006,39.826468,-121.641312,40.038655]
-download_url_tiff = download_url
+download_url_tiff = object_download_url
 
 # When using a bbox
 request_payload_with_bbox = {
@@ -2800,7 +2775,7 @@ request_payload_with_url = {
 			"urls": [download_url_tiff] # When using url
 	},
 	"temporal_domain": [
-			"2024-08-12_2024-08-13"
+			"2024-08-12"
 	]
 }</div>
 </div>
@@ -2809,7 +2784,7 @@ request_payload_with_url = {
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=57b8707b-eb31-40bc-8b77-45eba095b535">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=adcd3613">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -2817,7 +2792,7 @@ request_payload_with_url = {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-27">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-24">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2832,7 +2807,7 @@ request_payload_with_url = {
 <span class="n">inference_response</span> <span class="o">=</span> <span class="n">gfm_client</span><span class="o">.</span><span class="n">try_out_tune</span><span class="p">(</span><span class="n">tune_id</span><span class="o">=</span><span class="n">tune_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">request_payload_with_bbox</span><span class="p">)</span>
 <span class="n">inference_response</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-27"># Now submit the test inference request
+<div class="clipboard-copy-txt" id="cell-24"># Now submit the test inference request
 # Change the request to the correct one when using urls
 inference_response = gfm_client.try_out_tune(tune_id=tune_id, data=request_payload_with_bbox)
 inference_response</div>
@@ -2861,7 +2836,7 @@ inference_response</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-28">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-25">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2873,7 +2848,7 @@ inference_response</div>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">gfm_client</span><span class="o">.</span><span class="n">download_tune</span><span class="p">(</span><span class="n">tune_id</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-28">gfm_client.download_tune(tune_id)</div>
+<div class="clipboard-copy-txt" id="cell-25">gfm_client.download_tune(tune_id)</div>
 </div>
 </div>
 </div>
