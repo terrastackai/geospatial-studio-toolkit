@@ -5,6 +5,7 @@
 import json
 import os
 from datetime import datetime, timezone
+import random
 from time import sleep
 from typing import Any
 
@@ -807,11 +808,11 @@ class Client(BaseClient):
             dict: The final status of the tune, including details such as the number of epochs and any error messages if the tune failed.
         """
         # Default to a minimum of 10 seconds poll frequency.
-        poll_frequency = 10 if poll_frequency < 10 else poll_frequency
+        poll_frequency = max(poll_frequency, 10)
         finished = False
-
+        max_poll_frequency = 120
         while finished is False:
-            r = self.get_tune(tune_id)
+            r: Response | DataFrame | Dict[str, Any | str] = self.get_tune(tune_id)
             status = r["status"]
             time_taken = (
                 datetime.now(timezone.utc)
@@ -839,4 +840,8 @@ class Client(BaseClient):
             else:
                 print(status + " - Epoch: " + str(m_epochs) + " - " + str(time_taken) + " seconds", end="\r")
 
-            sleep(poll_frequency)
+            jitter = random.uniform(0.8,1.2)
+            actual_sleep = poll_frequency * jitter
+            sleep(actual_sleep)
+            poll_frequency = min(poll_frequency * 1.5, max_poll_frequency)
+
