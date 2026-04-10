@@ -208,7 +208,6 @@ class BaseClient:
         #         well_known_url=self.api_config.ISV_WELL_KNOWN,
         #         userinfo_endpoint=self.api_config.ISV_USER_ENDPOINT,
         #     )
-
         self.logger = logging.getLogger()
 
     # @property
@@ -227,6 +226,7 @@ class BaseClient:
             params (dict, optional): Query parameters to include in the GET request.
             output (str, optional): The desired output format.
             data_field (str, optional): The name of the data field to extract from the response.
+
         Returns:
             object: The response data in the specified format.
         """
