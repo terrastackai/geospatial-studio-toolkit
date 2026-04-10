@@ -19,8 +19,6 @@ from ..exceptions import GeoFMException
 from ..session import gfm_session
 
 
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 class ResponseFormats(str, Enum):
     """
     An enumeration representing the supported output formats.
@@ -211,13 +209,6 @@ class BaseClient:
         #         userinfo_endpoint=self.api_config.ISV_USER_ENDPOINT,
         #     )
 
-        retry_strategy = Retry(
-            total=3,
-            backoff_factor=1,
-        )
-        adapter = HTTPAdapter(max_retries=retry_strategy)
-        self.session.mount("http://", adapter)
-        self.session.mount("https://", adapter)
         self.logger = logging.getLogger()
 
     # @property
