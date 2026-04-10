@@ -81,8 +81,6 @@ def gfm_session(
         }
 
     session = requests.Session()
-    # retries = requests.adapters.Retry(total=max_retry or False, backoff_factor=1, status_forcelist=[502, 503, 504])
-    # session.mount("https://", requests.adapters.HTTPAdapter(max_retries=retries))
     retries = requests.adapters.Retry(
         total=max_retry or 3,
         backoff_factor=1,
