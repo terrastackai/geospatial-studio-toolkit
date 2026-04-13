@@ -770,8 +770,9 @@ class Client(BaseClient):
             dict: The final status of the dataset, either "Succeeded" or "Failed".
         """
         # Default to a minimum of 10 seconds poll frequency.
-        poll_frequency = 10 if poll_frequency < 10 else poll_frequency
+        poll_frequency = max(poll_frequency, 10)
         finished = False
+        max_poll_frequency = 120
 
         while finished is False:
             r = self.get_dataset(dataset_id)
@@ -794,7 +795,10 @@ class Client(BaseClient):
             else:
                 print(status + " - " + str(time_taken) + " seconds", end="\r")
 
-            sleep(poll_frequency)
+            jitter = random.uniform(0.8,1.2)
+            actual_sleep = poll_frequency * jitter
+            sleep(actual_sleep)
+            poll_frequency = min(poll_frequency * 1.5, max_poll_frequency)
 
     def poll_finetuning_until_finished(self, tune_id, poll_frequency=10):
         """
