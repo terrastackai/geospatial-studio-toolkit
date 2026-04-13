@@ -5,6 +5,7 @@
 import json
 import mimetypes
 import os
+import random
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -437,8 +438,9 @@ class Client(BaseClient):
         Returns:
             dict: The response from the inference task when it is completed or failed.
         """
-        poll_frequency = 10 if poll_frequency < 10 else poll_frequency
+        poll_frequency = max(poll_frequency, 10)
         finished = False
+        max_poll_frequency = 120
 
         while finished is False:
             r = self.get_inference(inference_id)
@@ -466,7 +468,10 @@ class Client(BaseClient):
             else:
                 print(status + " - " + str(time_taken) + " seconds", end="\r")
 
-            sleep(poll_frequency)
+            jitter = random.uniform(0.8,1.2)
+            actual_sleep = poll_frequency * jitter
+            sleep(actual_sleep)
+            poll_frequency = min(poll_frequency * 1.5, max_poll_frequency)
 
     ##############################################
     #   Geoserver layers
