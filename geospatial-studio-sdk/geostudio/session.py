@@ -81,8 +81,16 @@ def gfm_session(
         }
 
     session = requests.Session()
-    retries = requests.adapters.Retry(total=max_retry or False, backoff_factor=1, status_forcelist=[502, 503, 504])
-    session.mount("https://", requests.adapters.HTTPAdapter(max_retries=retries))
+    retries = requests.adapters.Retry(
+        total=max_retry or 3,
+        backoff_factor=1,
+        status_forcelist=[502, 503, 504],
+        connect=3,  # connection errors
+        read=3,     # read errors (RemoteDisconnected)
+    )
+    adapter = requests.adapters.HTTPAdapter(max_retries=retries)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
     session.request = functools.partial(session.request, timeout=timeout)
 
     session.headers.update(request_headers)
