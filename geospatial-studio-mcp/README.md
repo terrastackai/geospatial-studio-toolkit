@@ -2,6 +2,8 @@
 
 A Model Context Protocol (MCP) server that provides AI assistants like Claude with direct access to IBM's Geospatial Studio platform. This server enables natural language interactions for geospatial AI model inference, fine-tuning, and data discovery.
 
+![Example of Geospatial Studio MCP Server with Claude Desktop](claude-mcp-example.gif)
+
 ## 📋 Overview
 
 The Geospatial Studio MCP server exposes a comprehensive set of tools that allow AI assistants to:
