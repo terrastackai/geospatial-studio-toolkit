@@ -1,0 +1,4 @@
+terrakit
+fastmcp
+owslib
+geostudio
